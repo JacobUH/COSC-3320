@@ -80,28 +80,29 @@ void merge(vector <int> &robert, vector <int> & rachel, int left, int mid, int r
   }
 
   // if there are remaining elements leftover in the Left and Right subarrays for robert and rachel
+
+  // robert left subarray
   while (robert_i < leftSize){
     robert[robert_k] = robertLeft[robert_i];
     robert_i++;
-    robert_k++;
   }
 
+  // robert right subarray
   while (robert_j < rightSize){
     robert[robert_k] = robertRight[robert_j];
     robert_j++;
-    robert_k++;
   }
 
+  // rachel left subarray
   while (rachel_i < leftSize){
     rachel[rachel_k] = rachelLeft[rachel_i];
     rachel_i++;
-    rachel_k++;
   }
 
+  // rachel right subarray
   while (rachel_j < rightSize){
     rachel[rachel_k] = rachelRight[rachel_j];
     rachel_j++;
-    rachel_k++;
   }
 }
 
@@ -113,6 +114,7 @@ void mergeSort(vector <int> robert, vector <int> rachel, int left, int right){
     mergeSort(robert, rachel, left, mid);
     // rights
     mergeSort(robert, rachel, mid + 1, right);
+    // merge function
     merge(robert, rachel, left, mid, right);
   } 
 }
