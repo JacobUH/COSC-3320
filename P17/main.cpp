@@ -27,6 +27,5 @@ int main(){
     int k = countRotations(arr);
     int target = binarySearch(arr, value);
     cout << k << endl << target;
-
     return 0;
 }
