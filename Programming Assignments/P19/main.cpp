@@ -1,3 +1,5 @@
+// 13f26e1e-192d-473f-9283-709f7cb8711b
+
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -7,15 +9,15 @@ using namespace std;
 int robertPoints = 0;
 int rachelPoints = 0;
 
-int calcPoints(vector <int> subArray1, vector <int> subArray2){
+int calcPoints(vector <int> subArrayLeft, vector <int> subArrayRight){
   int index = 0;
   int tempScore = 0;
   int finalScore = 0;
-  while (index < subArray1.size()){
-    while (){
-      
+  while (index < subArrayRight.size()){
+    while ( tempScore < subArrayLeft.size() && subArrayLeft[tempScore] < subArrayRight[index]){
+      tempScore++;
     }
-
+    finalScore += tempScore;
     index++;
   }
   return finalScore;
@@ -25,25 +27,24 @@ void merge(vector <int> &robert, vector <int> & rachel, int left, int mid, int r
   int leftSize = mid - left + 1;
   int rightSize = right - mid;
 
-  vector <int> robertLeft;
-  vector <int> robertRight;
-  vector <int> rachelLeft;
-  vector <int> rachelRight;
+  vector <int> robertLeft(robert.begin() + left, robert.begin() + mid+1);
+  vector <int> robertRight(robert.begin() + mid+1, robert.begin() + right+1);
+  vector <int> rachelLeft(rachel.begin() + left, rachel.begin() + mid+1);
+  vector <int> rachelRight(rachel.begin() + mid+1, rachel.begin() + right+1);
 
+  /*
   // copy the subarrays over to the vectors
   for (int i = 0; i < leftSize; i++){
-    robertLeft[i] = robert[left + i];
-    rachelLeft[i] = rachel[left + i];
-  }
+    robertLeft.push_back(robert[left + i]);
+    rachelLeft.push_back(rachel[left + i]);
+}
 
   for (int j = 0; j < rightSize; j++){
-    robertRight[j] = robert[mid + 1 + j];
-    rachelRight[j] = rachel[mid + 1 + j];
+    robertRight.push_back(robert[mid + 1 + j]);
+    rachelRight.push_back(rachel[mid + 1 + j]);
   }
-
-  // helper here
-  int i = 0;
-  int j = 0;
+  */
+  
   
 
   // create indexes for saving the indexes of the main array and subarrays
@@ -79,34 +80,42 @@ void merge(vector <int> &robert, vector <int> & rachel, int left, int mid, int r
     rachel_k++;
   }
 
+  // helper function
+  robertPoints += calcPoints(rachelLeft, robertRight);
+  rachelPoints += calcPoints(robertLeft, rachelRight);
+
   // if there are remaining elements leftover in the Left and Right subarrays for robert and rachel
 
   // robert left subarray
   while (robert_i < leftSize){
     robert[robert_k] = robertLeft[robert_i];
     robert_i++;
+    robert_k++;
   }
 
   // robert right subarray
   while (robert_j < rightSize){
     robert[robert_k] = robertRight[robert_j];
     robert_j++;
+    robert_k++;
   }
 
   // rachel left subarray
   while (rachel_i < leftSize){
     rachel[rachel_k] = rachelLeft[rachel_i];
     rachel_i++;
+    rachel_k++;
   }
 
   // rachel right subarray
   while (rachel_j < rightSize){
     rachel[rachel_k] = rachelRight[rachel_j];
     rachel_j++;
+    rachel_k++;
   }
 }
 
-void mergeSort(vector <int> robert, vector <int> rachel, int left, int right){
+void mergeSort(vector <int> &robert, vector <int> &rachel, int left, int right){
   if (left < right){
     int mid = left + (right - left) / 2;
 
@@ -126,15 +135,17 @@ int main(){
     int num;
 
     getline(cin, in);
-    istringstream iss1(in);
+    stringstream iss1(in);
     while (iss1 >> num)
       robert.push_back(num);
     
     getline(cin, in);
-    istringstream iss2(in);
+    stringstream iss2(in);
     while (iss2 >> num)
       rachel.push_back(num);
     
     mergeSort(robert, rachel, 0, rachel.size()-1);
     cout << robertPoints << " " << rachelPoints;
+
+    return 0;
 }
