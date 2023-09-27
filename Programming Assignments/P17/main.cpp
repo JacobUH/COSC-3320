@@ -3,7 +3,15 @@
 #include <vector>
 using namespace std;
 
-int countRotations(vector<int> &nums, int left, int mid){
+// looking for the lowest number (the start of where the array was)
+int countRotations(vector<int> &nums, int left, int right){
+    if (left >= right)
+        return left;
+    int mid = (left + right) / 2;
+    if (nums[mid] > nums[right])
+        return countRotations(nums, mid+1, right);
+    else
+        return countRotations(nums, left, mid);
     return 0;
 }
 
