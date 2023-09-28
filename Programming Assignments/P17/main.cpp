@@ -1,3 +1,5 @@
+// 353ece3a-cc59-416c-8933-cecc4db69553
+
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -65,7 +67,7 @@ int main(){
 
     int k = countRotations(arr, 0, arr.size()-1);
     int target = binarySearch(arr, 0, mid, arr.size()-1, value);
-    cout << k << endl << target;
+    cout << k << '\n' << target;
 
     return 0;
 }
