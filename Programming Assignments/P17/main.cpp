@@ -1,4 +1,4 @@
-// 353ece3a-cc59-416c-8933-cecc4db69553
+// fbbfa9d3-316a-4951-916d-312ccc02dd96
 
 #include <iostream>
 #include <sstream>
@@ -16,38 +16,41 @@ int countRotations(vector<int> &nums, int left, int right){
         return countRotations(nums, left, mid);
     return 0;
 }
-/*
-int binarySearch(vector<int> &nums, int left, int right, int target){
-    int mid = (left + right) / 2;
-    if (target == nums[mid])
-        return mid;
 
-    // left subarray
-    if (nums[left] <= nums[mid]){
-        // search right subarray conditions
-        if (target > nums[mid] || target < nums[left]){
-            return binarySearch(nums, mid+1, right, target);
+int binarySearch(vector<int> &nums, int left, int right, int target){
+    while (left <= right){
+        int mid = (left + right) / 2;
+        if (target == nums[mid])
+            return mid;
+
+        // left subarray
+        if (nums[left] <= nums[mid]){
+            // search right subarray conditions
+            if (target > nums[mid] || target < nums[left]){
+                return binarySearch(nums, mid+1, right, target);
+            }
+            // search left conditions
+            else{
+                return binarySearch(nums, left, mid-1, target);
+            }
         }
-        // search left conditions
+        // right subarray
         else{
-            return binarySearch(nums, left, mid-1, target);
-        }
-    }
-    // right subarray
-    else{
-        // search left subarray conditions
-        if (target < nums[mid] || target > nums[right]){
-            return binarySearch(nums, left, mid-1, target);
-        }
-        // search right conditons
-        else{
-            return binarySearch(nums, mid+1, right, target);
+            // search left subarray conditions
+            if (target < nums[mid] || target > nums[right]){
+                return binarySearch(nums, left, mid-1, target);
+            }
+            // search right conditons
+            else{
+                return binarySearch(nums, mid+1, right, target);
+            }
         }
     }
     return -1;
 }
-*/
 
+/*
+// non-recursive
 int binarySearch(vector<int> &nums, int left, int mid, int right, int target){
     while (left <= right){
         mid = (left + right) / 2;
@@ -79,6 +82,7 @@ int binarySearch(vector<int> &nums, int left, int mid, int right, int target){
     }
     return -1;
 }
+*/
 
 int main(){
 
@@ -94,10 +98,10 @@ int main(){
         arr.push_back(num);
     cin >> value;
 
-    int mid = arr.size()/2;
+    // int mid = arr.size()/2;
 
     int k = countRotations(arr, 0, arr.size()-1);
-    int target = binarySearch(arr, 0, mid, arr.size()-1, value);
+    int target = binarySearch(arr, 0, arr.size()-1, value);
     cout << k << '\n' << target;
 
     return 0;
