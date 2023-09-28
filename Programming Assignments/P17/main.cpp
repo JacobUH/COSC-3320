@@ -16,6 +16,37 @@ int countRotations(vector<int> &nums, int left, int right){
         return countRotations(nums, left, mid);
     return 0;
 }
+/*
+int binarySearch(vector<int> &nums, int left, int right, int target){
+    int mid = (left + right) / 2;
+    if (target == nums[mid])
+        return mid;
+
+    // left subarray
+    if (nums[left] <= nums[mid]){
+        // search right subarray conditions
+        if (target > nums[mid] || target < nums[left]){
+            return binarySearch(nums, mid+1, right, target);
+        }
+        // search left conditions
+        else{
+            return binarySearch(nums, left, mid-1, target);
+        }
+    }
+    // right subarray
+    else{
+        // search left subarray conditions
+        if (target < nums[mid] || target > nums[right]){
+            return binarySearch(nums, left, mid-1, target);
+        }
+        // search right conditons
+        else{
+            return binarySearch(nums, mid+1, right, target);
+        }
+    }
+    return -1;
+}
+*/
 
 int binarySearch(vector<int> &nums, int left, int mid, int right, int target){
     while (left <= right){
